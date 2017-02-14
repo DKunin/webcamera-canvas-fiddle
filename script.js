@@ -1,9 +1,20 @@
+'use strict';
+const HEIGHT = 480;
+const WIDTH = 640;
+let front = false;
 var videoHolder = document.querySelector('.avatar-video-holder');
 var video = document.querySelector('.avatar-video');
 var photo = document.querySelector('.photo');
 
-function startWebcam() {
-    var constraints = { audio: false, video: { width: 640, height: 480 } };
+function startWebcam(front) {
+    var constraints = {
+        audio: false,
+        video: {
+            width: WIDTH,
+            height: HEIGHT,
+            facingMode: front ? 'user' : 'environment'
+        }
+    };
     videoHolder.style.display = 'block';
     photo.style.display = 'none';
     navigator.mediaDevices
@@ -22,14 +33,14 @@ function startWebcam() {
 function takepicture() {
     const canvas = document.createElement('canvas');
     var context = canvas.getContext('2d');
-    canvas.width = 640;
-    canvas.height = 480;
+    canvas.width = WIDTH;
+    canvas.height = HEIGHT;
     const track = video.srcObject.getTracks()[0];
-    context.drawImage(video, 0, 0, 640, 480);
+    context.drawImage(video, 0, 0, WIDTH, HEIGHT);
     context.fillStyle = '#fff';
     context.globalCompositeOperation = 'destination-in';
     context.beginPath();
-    context.arc(480 / 2, 480 / 2, 480 / 2, 0, Math.PI * 2, true);
+    context.arc(HEIGHT / 2, HEIGHT / 2, HEIGHT / 2, 0, Math.PI * 2, true);
     context.closePath();
     context.fill();
     var data = canvas.toDataURL('image/png');
@@ -43,3 +54,6 @@ startWebcam();
 
 document.querySelector('.takepicture').addEventListener('click', takepicture);
 document.querySelector('.takenew').addEventListener('click', startWebcam);
+document.querySelector('.flip').addEventListener('click', function() {
+    startWebcam(front = !front);
+});
