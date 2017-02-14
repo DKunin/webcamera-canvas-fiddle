@@ -1,4 +1,5 @@
 'use strict';
+
 const HEIGHT = 480;
 const WIDTH = 640;
 let front = false;
