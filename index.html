@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Photobooth</title>
+    <style>
+        .avatar-video {
+            width: 100%;
+        }
+        .avatar-video-holder {
+            float: left;
+            width: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+        .output {
+            float: left;
+            width: 400px;
+            height: 400px;
+        }
+        .output img {
+            height: 100%; 
+        }
+
+        .avatar-video-holder::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            margin-top: -150px;
+            margin-left: -150px;
+            box-sizing: border-box;
+            box-shadow: 0 0 0 1000px rgba(255,255,255,1);
+            background: none repeat scroll 0 0 transparent;
+            border-radius: 50%;
+        }
+        .controls {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <div class="avatar-video-holder">
+        <video class="avatar-video"></video>
+    </div>
+    <div class="output">
+        <img class="photo"/> 
+    </div>
+    <div class="controls">
+        <button class="takepicture">takepicture</button>
+        <button class="takenew">takenew</button>
+    </div>
+</body>
+<script type="text/javascript" src="./script.js"></script>
+</html>
