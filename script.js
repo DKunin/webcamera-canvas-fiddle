@@ -6,6 +6,7 @@ let front = false;
 var videoHolder = document.querySelector('.avatar-video-holder');
 var video = document.querySelector('.avatar-video');
 var photo = document.querySelector('.photo');
+var output = document.querySelector('.output');
 
 function startWebcam(front) {
     var constraints = {
@@ -18,6 +19,7 @@ function startWebcam(front) {
     };
     videoHolder.style.display = 'block';
     photo.style.display = 'none';
+    output.style.display = 'none';
     navigator.mediaDevices
         .getUserMedia(constraints)
         .then(function(mediaStream) {
@@ -50,11 +52,22 @@ function takepicture() {
     video.srcObject = null;
     videoHolder.style.display = 'none';
     photo.style.display = 'block';
+    output.style.display = 'block';
 }
-startWebcam();
 
 document.querySelector('.takepicture').addEventListener('click', takepicture);
-document.querySelector('.takenew').addEventListener('click', startWebcam);
+
+document.querySelector('.camera').addEventListener('change', function(event){
+        var reader = new FileReader();
+        reader.onloadend = function() {
+            photo.setAttribute('src', reader.result);
+        };
+        photo.style.display = 'block';
+        output.style.display = 'block';
+        reader.readAsDataURL(event.target.files[0]);
+});
+
+document.querySelector('.сamera').addEventListener('click', startWebcam);
 document.querySelector('.flip').addEventListener('click', function() {
     startWebcam(front = !front);
 });
