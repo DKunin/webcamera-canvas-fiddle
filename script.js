@@ -1,8 +1,8 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', function() {
-    const HEIGHT = 480;
-    const WIDTH = 640;
+    const HEIGHT = 300;
+    const WIDTH = 300;
     let front = false;
     var videoHolder = document.querySelector('.avatar-video-holder');
     var video = document.querySelector('.avatar-video');
@@ -41,13 +41,14 @@ document.addEventListener('DOMContentLoaded', function() {
         canvas.height = HEIGHT;
         const track = video.srcObject.getTracks()[0];
         //video.srcObject.getVideoTracks()[0].getConstraints()
-        context.drawImage(video, 0, 0, WIDTH, HEIGHT);
-        context.fillStyle = '#fff';
-        context.globalCompositeOperation = 'destination-in';
-        context.beginPath();
-        context.arc(HEIGHT / 2, HEIGHT / 2, HEIGHT / 2, 0, Math.PI * 2, true);
-        context.closePath();
-        context.fill();
+        // 
+        context.drawImage(video, 0, 0, 640, 480, -90, 0, 399, 300);
+        // context.fillStyle = '#fff';
+        // context.globalCompositeOperation = 'destination-in';
+        // context.beginPath();
+        // context.arc(HEIGHT / 2, HEIGHT / 2, HEIGHT / 2, 0, Math.PI * 2, true);
+        // context.closePath();
+        // context.fill();
         var data = canvas.toDataURL('image/png');
         photo.setAttribute('src', data);
         track.stop();
@@ -73,4 +74,5 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.flip').addEventListener('click', function() {
         startWebcam(front = !front);
     });
+    startWebcam()
 })

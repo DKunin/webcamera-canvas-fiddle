@@ -6,7 +6,8 @@
     <title>Photobooth</title>
     <style>
         .avatar-video {
-            width: 100%;
+            /*width: 100%;*/
+            margin-left: -54px;
         }
         .avatar-video-holder {
             float: left;
@@ -21,7 +22,7 @@
         .output img {
             height: 100%; 
         }
-
+/*
         .avatar-video-holder::before {
             content: '';
             position: absolute;
@@ -35,15 +36,23 @@
             box-shadow: 0 0 0 1000px rgba(255,255,255,1);
             background: none repeat scroll 0 0 transparent;
             border-radius: 50%;
-        }
+        }*/
         .controls {
             clear: both;
+        }
+        .constrains {
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
         }
     </style>
 </head>
 <body>
     <div class="avatar-video-holder">
-        <video class="avatar-video"></video>
+        <div class="constrains">
+            
+            <video class="avatar-video" height="348px"></video>
+        </div>
     </div>
     <div class="output">
         <img class="photo"/> 
