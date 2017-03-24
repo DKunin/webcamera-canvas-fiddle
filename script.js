@@ -34,31 +34,31 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    function takepicture() {
+    function takepicture(src) {
         const canvas = document.createElement('canvas');
         var context = canvas.getContext('2d');
+
         canvas.width = WIDTH;
         canvas.height = HEIGHT;
-        const track = video.srcObject.getTracks()[0];
-        //video.srcObject.getVideoTracks()[0].getConstraints()
-        // 
-        context.drawImage(video, 0, 0, 640, 480, -90, 0, 399, 300);
-        // context.fillStyle = '#fff';
-        // context.globalCompositeOperation = 'destination-in';
-        // context.beginPath();
-        // context.arc(HEIGHT / 2, HEIGHT / 2, HEIGHT / 2, 0, Math.PI * 2, true);
-        // context.closePath();
-        // context.fill();
+        context.drawImage(src, 0, 0, WIDTH, HEIGHT);
+        context.fillStyle = '#fff';
+        context.globalCompositeOperation = 'destination-in';
+        context.beginPath();
+        context.arc(HEIGHT / 2, HEIGHT / 2, HEIGHT / 2, 0, Math.PI * 2, true);
+        context.closePath();
+        context.fill();
         var data = canvas.toDataURL('image/png');
         photo.setAttribute('src', data);
-        track.stop();
-        video.srcObject = null;
+        // track.stop();
+        // video.srcObject = null;
         videoHolder.style.display = 'none';
         photo.style.display = 'block';
         output.style.display = 'block';
     }
 
-    document.querySelector('.takepicture').addEventListener('click', takepicture);
+    document.querySelector('.takepicture').addEventListener('click', function(){
+        takepicture(video);
+    });
 
     // document.querySelector('.camera').addEventListener('change', function(event){
     //         var reader = new FileReader();
@@ -74,5 +74,22 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.flip').addEventListener('click', function() {
         startWebcam(front = !front);
     });
-    startWebcam()
+
+    document.querySelector('.upload-file').addEventListener('change', function(event){
+        var reader = new FileReader();
+        reader.onloadend = function() {
+            const image = new Image();
+            image.src = reader.result;
+            image.style.height = HEIGHT;
+            image.style.width = WIDTH;
+            const futureParent = document.querySelector('.image-holder');
+            futureParent.appendChild(image);
+            image.onload = function() {
+                takepicture(image);
+            };
+        };
+        
+        reader.readAsDataURL(event.target.files[0]);
+    })
+    // startWebcam()
 })
