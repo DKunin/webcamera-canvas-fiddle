@@ -37,16 +37,23 @@ document.addEventListener('DOMContentLoaded', function() {
     function takepicture(src) {
         const canvas = document.createElement('canvas');
         var context = canvas.getContext('2d');
+        const { width, height } = src;
 
-        canvas.width = WIDTH;
-        canvas.height = HEIGHT;
-        context.drawImage(src, 0, 0, WIDTH, HEIGHT);
-        context.fillStyle = '#fff';
-        context.globalCompositeOperation = 'destination-in';
-        context.beginPath();
-        context.arc(HEIGHT / 2, HEIGHT / 2, HEIGHT / 2, 0, Math.PI * 2, true);
-        context.closePath();
-        context.fill();
+        // canvas.width = WIDTH;
+        // canvas.height = HEIGHT;
+        const newWidth = 300;
+        const newWHeight = 300;
+        canvas.width = newWidth;
+        canvas.height = newWHeight;
+        context.drawImage(src, 300, 300, newWidth, newWHeight, 0, 0, newWidth, newWHeight);
+        // ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+        // context.fillStyle = '#fff';
+        // context.globalCompositeOperation = 'destination-in';
+        // context.beginPath();
+        // context.arc(HEIGHT / 2, HEIGHT / 2, HEIGHT / 2, 0, Math.PI * 2, true);
+        // context.closePath();
+        // context.fill();
+        // window.open(canvas.toDataURL("image/png"));
         var data = canvas.toDataURL('image/png');
         photo.setAttribute('src', data);
         // track.stop();

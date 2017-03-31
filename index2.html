@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Photobooth</title>
+    <style>
+        .result {
+            border: 1px solid red;
+        }
+        .holder {
+            display: flex;
+        }
+        .image-holder {
+            width: 400px;
+            height: 400px;
+            overflow: hidden;
+        }
+        .image-holder img {
+            transform-origin: top left;
+        }
+    </style>
+</head>
+<body>
+    <div class="holder">
+        <div>
+            <img src="" alt="" class="js-result result">
+        </div>
+        <div class="image-holder">
+            <img src="./test-image.jpg" class="js-image"/>
+        </div>
+    </div>
+    <div>
+        <input type="number" step="0.1" name="scale" class="js-inputs" value="0.5"/>
+    </div>
+    <div>
+        <input type="number" step="20" name="offsetX" class="js-inputs" value="0"/>
+    </div>
+    <div>
+        <input type="number" step="20" name="offsetY" class="js-inputs" value="0"/>
+    </div>
+    <div class="js-console">
+        
+    </div>
+</body>
+    <script>
+        const RESULT_IMAGE = document.querySelector('.js-result');
+        const ORIGINAL_IMAGE = document.querySelector('.js-image');
+        const CONSOLE = document.querySelector('.js-console');
+        const INPUTS = Array.from(document.querySelectorAll('.js-inputs'));
+
+        function redraw(image, width = 400, height = 400, offsetX = 0, offsetY = 0, scale = 1, resultImage) {
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const { naturalWidth, naturalHeight } = ORIGINAL_IMAGE;
+            const context = canvas.getContext('2d');
+
+            const ratio = Math.abs(scale * 100 / width);
+            
+            ORIGINAL_IMAGE.style.transform = `scale(${Math.abs(scale)})`
+            const args = [image, offsetX, offsetY, width * ratio, height * ratio, 0, 0, width, height];
+            CONSOLE.innerHTML = width * ratio + ' /' + ratio + ' / ' + args;
+            context.drawImage(...args);
+            
+
+            resultImage.src = canvas.toDataURL('image/png');
+            return canvas.toDataURL('image/png');
+        }
+
+        ORIGINAL_IMAGE.onload = function() {
+            redraw(ORIGINAL_IMAGE, 400, 400, 0, 0, 0.5, RESULT_IMAGE);
+        }
+
+        INPUTS.forEach(singleElement => {
+            singleElement.addEventListener('change', function(event){
+                const scale = parseFloat(document.querySelector('[name="scale"]').value, 10);
+                const offsetX = document.querySelector('[name="offsetX"]').value;
+                const offsetY = document.querySelector('[name="offsetY"]').value;
+                redraw(ORIGINAL_IMAGE, 400, 400, offsetX, offsetY, scale, RESULT_IMAGE);
+            })
+        })
+
+
+
+
+    </script>
+</html>
