@@ -56,11 +56,12 @@
             const { naturalWidth, naturalHeight } = ORIGINAL_IMAGE;
             const context = canvas.getContext('2d');
 
-            const ratio = Math.abs(scale * 100 / width);
-            
-            ORIGINAL_IMAGE.style.transform = `scale(${Math.abs(scale)})`
-            const args = [image, offsetX, offsetY, width * ratio, height * ratio, 0, 0, width, height];
-            CONSOLE.innerHTML = width * ratio + ' /' + ratio + ' / ' + args;
+            const ratio = Math.abs(width / scale) ;
+            const newOffsetX = (offsetX * -1) * scale;
+            ORIGINAL_IMAGE.style.transform = `translate(${newOffsetX}px, 0px) scale(${Math.abs(scale)})`
+            const args = [image, offsetX, offsetY, ratio, ratio, 0, 0, width, height];
+
+            CONSOLE.innerHTML = scale + '/' + ratio + ' / ' + args;
             context.drawImage(...args);
             
 
